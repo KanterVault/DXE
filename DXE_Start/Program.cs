@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpDX;
+﻿using SharpDX;
 using SharpDX.Animation;
 using SharpDX.D3DCompiler;
 using SharpDX.Diagnostics;
@@ -27,15 +22,38 @@ using SharpDX.X3DAudio;
 using SharpDX.XAPO;
 using SharpDX.XAudio2;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace DXE_Start
 {
     class Program
     {
+        private static bool exitRequest = false;
+        private static bool isStopedThread = false;
+
+        private static Thread windowThread = new Thread(WindowThread);
+
+        private static void WindowThread()
+        {
+            while (!exitRequest)
+            {
+                Console.WriteLine("Main Thread");
+            }
+            isStopedThread = true;
+        }
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello");
-
+            windowThread.Start();
             Console.Read();
+            exitRequest = true;
+            while (!isStopedThread) { }
+            try { windowThread.Abort(); } catch { }
         }
     }
 }

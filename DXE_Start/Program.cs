@@ -28,6 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DXE_Start
 {
@@ -37,13 +38,27 @@ namespace DXE_Start
         private static bool isStopedThread = false;
 
         private static Thread windowThread = new Thread(WindowThread);
+        private static Form mainForm;
 
         private static void WindowThread()
         {
+            mainForm = new Form();
+            mainForm.Text = "DX12";
+            mainForm.Width = 640;
+            mainForm.Height = 480;
+            mainForm.Show();
+
             while (!exitRequest)
             {
-                Console.WriteLine("Main Thread");
+                mainForm.Update();
+                mainForm.Invalidate();
+                mainForm.Refresh();
+                Application.DoEvents();
             }
+
+            mainForm.Close();
+            mainForm.Dispose();
+
             isStopedThread = true;
         }
 

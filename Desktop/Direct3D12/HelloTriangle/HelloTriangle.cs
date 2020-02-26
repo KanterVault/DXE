@@ -10,6 +10,7 @@ namespace HelloTriangle
     using SharpDX.Multimedia;
     using SharpDX.RawInput;
     using System.Windows.Forms;
+    using System.Runtime.InteropServices;
 
     public class HelloTriangle : IDisposable
     {
@@ -325,7 +326,7 @@ namespace HelloTriangle
         // Pipeline objects.
         private SwapChain3 swapChain;
         private SharpDX.Direct3D12.Device device;
-        private readonly Resource[] renderTargets = new Resource[FrameCount];
+        private readonly SharpDX.Direct3D12.Resource[] renderTargets = new SharpDX.Direct3D12.Resource[FrameCount];
         private CommandAllocator commandAllocator;
         private CommandQueue commandQueue;
         private RootSignature rootSignature;
@@ -335,14 +336,14 @@ namespace HelloTriangle
         private int rtvDescriptorSize;
 
         // App resources.
-        Resource vertexBuffer;
+        SharpDX.Direct3D12.Resource vertexBuffer;
         VertexBufferView vertexBufferView;
 
         // Synchronization objects.
         private int frameIndex;
         private AutoResetEvent fenceEvent;
 
-        private Fence fence;
+        private SharpDX.Direct3D12.Fence fence;
         private int fenceValue;
     }
 }
